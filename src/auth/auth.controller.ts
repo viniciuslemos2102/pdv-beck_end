@@ -9,8 +9,8 @@ export class AuthController {
   async login(@Body() body) {
     const user = await this.authService.validateUser(body.username, body.password);
     if (!user) {
-      return { message: 'Invalid credentials' };
+      return { message: 'Invalid credentials' }; // Retorne uma mensagem se as credenciais forem inválidas
     }
-    return this.authService.login(user);
+    return this.authService.login(user); // Retorne o token JWT
   }
 }

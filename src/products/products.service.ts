@@ -28,6 +28,16 @@ export class ProductsService {
     return product;
   }
 
+  async updateStock(productId: number, quantity: number): Promise<void> {
+    const product = await this.productsRepository.findOne({ where: { id: productId } });
+    if (!product) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+
+    product.stock -= quantity; // Reduz o estoque
+    await this.productsRepository.save(product); // Salva a atualização
+  }
+
   create(createProductDto: CreateProductDto): Promise<Product> {
     const product = this.productsRepository.create(createProductDto);
     return this.productsRepository.save(product);
